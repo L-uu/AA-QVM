@@ -88,7 +88,7 @@ endif
 export CROSS_COMPILING
 
 ifndef VERSION
-VERSION=slackers
+VERSION=aa
 endif
 
 ifndef CLIENTBIN
@@ -1150,8 +1150,13 @@ $(B)/out/$(BASEGAME)_11/vm/ui.qvm: $(UIVMOBJ11) $(UIDIR)/ui_syscalls_11.asm $(Q3
 ## QVM Package
 #############################################################################
   
-$(B)/out/$(BASEGAME)/vms-gpp1-$(VERSION).pk3: $(B)/out/$(BASEGAME)/vm/ui.qvm $(B)/out/$(BASEGAME)/vm/cgame.qvm $(B)/out/$(BASEGAME)/vm/game.qvm
-	@(cd $(B)/out/$(BASEGAME) && zip -r vms-gpp1-$(VERSION).pk3 vm/)
+ifeq ($(BUILD_ONLY_CGUI),0)
+  $(B)/out/$(BASEGAME)/vms-gpp1-$(VERSION).pk3: $(B)/out/$(BASEGAME)/vm/ui.qvm $(B)/out/$(BASEGAME)/vm/cgame.qvm $(B)/out/$(BASEGAME)/vm/game.qvm
+	  @(cd $(B)/out/$(BASEGAME) && zip -r vms-gpp1-$(VERSION).pk3 vm/)
+  else
+    $(B)/out/$(BASEGAME)/vms-gpp1-$(VERSION).pk3: $(B)/out/$(BASEGAME)/vm/ui.qvm $(B)/out/$(BASEGAME)/vm/cgame.qvm
+	  @(cd $(B)/out/$(BASEGAME) && zip -r vms-gpp1-$(VERSION).pk3 vm/)
+endif
 
 $(B)/out/$(BASEGAME)_11/vms-1.1.0-$(VERSION).pk3: $(B)/out/$(BASEGAME)_11/vm/ui.qvm $(B)/out/$(BASEGAME)_11/vm/cgame.qvm
 	@(cd $(B)/out/$(BASEGAME)_11 && zip -r vms-1.1.0-$(VERSION).pk3 vm/)
