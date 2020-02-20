@@ -421,6 +421,11 @@ g_admin_cmd_t g_admin_cmds[ ] =
     {"tklog", G_admin_tklog, "tklog",
       "list recent teamkill activity",
       "(^5start id#|name|-skip#^7) (^5search skip#^7)"
+    },
+
+    {"print",G_admin_print2, "print",
+      "prints text",
+      "[text to print]"
     }
 
   };
@@ -8183,5 +8188,13 @@ qboolean G_admin_tklog( gentity_t *ent, int skiparg )
   }
   ADMBP_end( );
 
+  return qtrue;
+}
+
+qboolean G_admin_print2(gentity_t *ent, int skiparg )
+{
+  char *text;
+  text = G_SayConcatArgs( 1 + skiparg );
+  AP( va( "print \"%s\n\"", text ));
   return qtrue;
 }

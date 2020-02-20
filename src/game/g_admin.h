@@ -290,6 +290,7 @@ qboolean G_admin_showff(gentity_t *ent, int skiparg);
 qboolean G_admin_tklog( gentity_t *ent, int skiparg );
 void G_admin_tklog_cleanup( void );
 void G_admin_tklog_log( gentity_t *attacker, gentity_t *victim, int meansOfDeath );
+qboolean G_admin_print2( gentity_t *ent, int skiparg );
 
 void G_admin_print( gentity_t *ent, char *m );
 void G_admin_buffer_print( gentity_t *ent, char *m );
