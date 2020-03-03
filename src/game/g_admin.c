@@ -7855,15 +7855,19 @@ qboolean G_admin_versions(gentity_t *ent, int skiparg)
 	return qtrue;
 }
 
+int ffpercentage( float fffloat ) {
+	return fffloat < 0 ? fffloat - 0.5 : fffloat + 0.5;
+}
+
 static int calc_ff_pct(statsCounters_t *sc) {
 	if (sc->dmgdone + sc->structdmgdone <= 0) {
 		if (sc->ffdmgdone <= 0)
 			return 0;
 		else
 			return 100;
-	} // else {
-		// return round((float)sc->ffdmgdone / (sc->ffdmgdone + sc->dmgdone + sc->structdmgdone) * 100);
-	// }
+	} else {
+		return round((float)sc->ffdmgdone / (sc->ffdmgdone + sc->dmgdone + sc->structdmgdone) * 100);
+	}
 }
 
 qboolean G_admin_showff(gentity_t *ent, int skiparg)
