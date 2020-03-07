@@ -2742,14 +2742,17 @@ void Cmd_Class_f( gentity_t *ent )
 
     if( ent->client->pers.teamSelection == PTE_ALIENS )
     {
-      if( newClass != PCL_ALIEN_BUILDER0 &&
-          newClass != PCL_ALIEN_BUILDER0_UPG &&
-          newClass != PCL_ALIEN_LEVEL0 )
+      if( !g_practise.integer )
       {
-        trap_SendServerCommand( ent-g_entities,
-          va( "print \"You cannot spawn with class %s\n\"", s ) );
-        return;
-      } 
+        if( newClass != PCL_ALIEN_BUILDER0 &&
+            newClass != PCL_ALIEN_BUILDER0_UPG &&
+            newClass != PCL_ALIEN_LEVEL0 )
+        {
+          trap_SendServerCommand( ent-g_entities,
+            va( "print \"You cannot spawn with class %s\n\"", s ) );
+          return;
+        }
+      }
       
       if( !BG_ClassIsAllowed( newClass ) )
       {
@@ -3019,6 +3022,13 @@ void Cmd_Destroy_f( gentity_t *ent )
     return;
   }
 
+  if( g_practise.integer )
+  {
+    trap_SendServerCommand( ent-g_entities,
+      "print \"You cannot build in practise mode\n\"" );
+    return;
+  }
+
   trap_Argv( 0, cmd, sizeof( cmd ) );
   if( Q_stricmp( cmd, "destroy" ) == 0 )
     deconstruct = qfalse;
@@ -3191,6 +3201,13 @@ void Cmd_Mark_f( gentity_t *ent )
   {
     trap_SendServerCommand( ent-g_entities,
       "print \"Your building rights have been revoked\n\"" );
+    return;
+  }
+
+  if( g_practise.integer )
+  {
+    trap_SendServerCommand( ent-g_entities,
+      "print \"You cannot build in practise mode\n\"" );
     return;
   }
 
@@ -3768,10 +3785,18 @@ void Cmd_Build_f( gentity_t *ent )
       "print \"Your building rights have been revoked\n\"" );
     return;
   }
+
   if( ent->client->pers.paused )
   {
     trap_SendServerCommand( ent-g_entities,
       "print \"You may not mark while paused\n\"" );
+    return;
+  }
+
+  if( g_practise.integer )
+  {
+    trap_SendServerCommand( ent-g_entities,
+      "print \"You cannot build in practise mode\n\"" );
     return;
   }
 

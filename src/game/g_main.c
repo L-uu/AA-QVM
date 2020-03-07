@@ -239,6 +239,7 @@ vmCvar_t  g_Bubbles;
 vmCvar_t  g_scrimMode;
 vmCvar_t  g_gradualFreeFunds;
 vmCvar_t  g_bleedingSpree;
+vmCvar_t  g_practise;
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -455,7 +456,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_Bubbles, "g_Bubbles", "1", CVAR_ARCHIVE, 0, qfalse  },
   { &g_scrimMode, "g_scrimMode", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_gradualFreeFunds, "g_gradualFreeFunds", "2", CVAR_ARCHIVE, 0, qtrue  },
-  { &g_bleedingSpree, "g_bleedingSpree", "0", CVAR_ARCHIVE, 0, qfalse  }
+  { &g_bleedingSpree, "g_bleedingSpree", "0", CVAR_ARCHIVE, 0, qfalse  },
+  { &g_practise, "g_practise", "0", CVAR_ARCHIVE, 0, qfalse }
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
@@ -847,8 +849,16 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
     G_PrintRotations( );
 
   //reset stages
-  trap_Cvar_Set( "g_alienStage", va( "%d", S1 ) );
-  trap_Cvar_Set( "g_humanStage", va( "%d", S1 ) );
+  if( g_practise.integer )
+  {
+    trap_Cvar_Set( "g_alienStage", "2" );
+    trap_Cvar_Set( "g_humanStage", "2" );
+  }
+  else
+  {
+    trap_Cvar_Set( "g_alienStage", va( "%d", S1 ) );
+    trap_Cvar_Set( "g_humanStage", va( "%d", S1 ) );
+  }
   trap_Cvar_Set( "g_alienKills", 0 );
   trap_Cvar_Set( "g_humanKills", 0 );
   trap_Cvar_Set( "g_suddenDeath", 0 );
