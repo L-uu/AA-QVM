@@ -8036,6 +8036,10 @@ qboolean G_admin_versions(gentity_t *ent, int skiparg)
 	return qtrue;
 }
 
+int ffpercentage( float fffloat ) {
+	return fffloat < 0 ? fffloat - 0.5 : fffloat + 0.5;
+}
+
 static int calc_ff_pct( statsCounters_t *sc )
 {
 	if ( sc->dmgdone + sc->structdmgdone <= 0 )
@@ -8047,7 +8051,7 @@ static int calc_ff_pct( statsCounters_t *sc )
 	}
 	else
 	{
-		return round((float)sc->ffdmgdone / (sc->ffdmgdone + sc->dmgdone + sc->structdmgdone) * 100);
+		return ffpercentage((float)sc->ffdmgdone / (sc->ffdmgdone + sc->dmgdone + sc->structdmgdone) * 100);
 	}
 }
 
