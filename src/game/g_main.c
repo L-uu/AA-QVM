@@ -404,6 +404,7 @@ static cvarTable_t   gameCvarTable[ ] =
 
   { &g_layouts, "g_layouts", "", CVAR_LATCH, 0, qfalse  },
   { &g_layoutAuto, "g_layoutAuto", "1", CVAR_ARCHIVE, 0, qfalse  },
+  { NULL, "g_LayoutConfigsLoaded", "0", CVAR_ROM, 0, qfalse  },
 
   { &g_admin, "g_admin", "admin.dat", CVAR_ARCHIVE, 0, qfalse  },
   { &g_adminLog, "g_adminLog", "admin.log", CVAR_ARCHIVE, 0, qfalse  },
@@ -473,7 +474,7 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_maxGhosts, "g_maxGhosts", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_specNoclip, "g_specNoclip", "0", CVAR_ARCHIVE, 0, qtrue },
   { &g_practise, "g_practise", "0", CVAR_ARCHIVE, 0, qfalse },
-  { &g_tyrantNerf, "g_tyrantNerf", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_tyrantNerf, "g_tyrantNerf", "0", CVAR_ARCHIVE, 0, qfalse }
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );
@@ -801,6 +802,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart )
 
   // we're done with g_mapConfigs, so reset this for the next map
   trap_Cvar_Set( "g_mapConfigsLoaded", "0" );
+  trap_Cvar_Set( "g_LayoutConfigsLoaded", "0" );
 
   if ( g_admin.string[ 0 ] ) {
     G_admin_readconfig( NULL, 0 );
