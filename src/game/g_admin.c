@@ -7786,21 +7786,19 @@ qboolean G_admin_hstage( gentity_t *ent, int skiparg )
     return qfalse;
   }
 
-  if( ( lvl != 1 ) | ( lvl != 2 ) | ( lvl != 3 ) )
+  G_SayArgv( 1 + skiparg, lvl_chr, sizeof( lvl_chr ) );
+
+  lvl = atoi(lvl_chr);
+
+  if( lvl < 1 || lvl > 3 )
   {
     ADMP( "^3!hstage: ^7invalid stage!\n" );
     return qfalse;
   }
 
-  G_SayArgv( 1 + skiparg, lvl_chr, sizeof( lvl_chr ) );
+  trap_SendConsoleCommand( EXEC_APPEND, va( "g_humanStage %i", lvl - 1 ) );
 
-  lvl = atoi(lvl_chr);
-
-  lvl -= 1;
-  trap_SendConsoleCommand( EXEC_APPEND, va( "g_humanStage %i", lvl ) );
-  lvl += 1;
-
-  AP( va( "print \"^3!hstage: ^7%s gave humans stage ^2%i^7\n\"",
+  AP( va( "print \"^3!hstage: ^7%s ^7gave humans stage ^2%i^7\n\"",
     ( ent ) ? G_admin_adminPrintName( ent ) : "console",
     lvl ) );
 
@@ -7821,21 +7819,19 @@ qboolean G_admin_astage( gentity_t *ent, int skiparg )
     return qfalse;
   }
 
-  if( ( lvl != 1 ) | ( lvl != 2 ) | ( lvl != 3 ) )
+  G_SayArgv( 1 + skiparg, lvl_chr, sizeof( lvl_chr ) );
+
+  lvl = atoi(lvl_chr);
+
+  if( lvl < 1 || lvl > 3 )
   {
     ADMP( "^3!astage: ^7invalid stage!\n" );
     return qfalse;
   }
 
-  G_SayArgv( 1 + skiparg, lvl_chr, sizeof( lvl_chr ) );
+  trap_SendConsoleCommand( EXEC_APPEND, va( "g_alienStage %i", lvl - 1 ) );
 
-  lvl = atoi(lvl_chr);
-
-  lvl -= 1;
-  trap_SendConsoleCommand( EXEC_APPEND, va( "g_alienStage %i", lvl ) );
-  lvl += 1;
-
-  AP( va( "print \"^3!astage: ^7%s gave aliens stage ^2%i^7\n\"",
+  AP( va( "print \"^3!astage: ^7%s ^7gave aliens stage ^2%i^7\n\"",
     ( ent ) ? G_admin_adminPrintName( ent ) : "console",
     lvl ) );
 
