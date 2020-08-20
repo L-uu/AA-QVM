@@ -190,6 +190,7 @@ typedef struct g_admin_namelog
   int       specExpires;
   int       voteCount;
   schachtmeisterJudgement_t smj;
+  char	    country[ 50 ];
 }
 g_admin_namelog_t;
 

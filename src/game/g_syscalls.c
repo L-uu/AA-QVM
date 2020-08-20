@@ -282,3 +282,7 @@ int trap_Parse_SourceFileAndLine( int handle, char *filename, int *line )
   return syscall( G_PARSE_SOURCE_FILE_AND_LINE, handle, filename, line );
 }
 
+int trap_GeoIP_GetCountryName( const char* ip_address, char* dest )
+{
+  return syscall( G_GEOIP_GETCOUNTRYNAME, ip_address, dest );
+}

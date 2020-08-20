@@ -1439,6 +1439,7 @@ const char *ClientConnect( int clientNum, qboolean firstTime )
   char      reason[ MAX_STRING_CHARS ] = {""};
   int       i;
   schachtmeisterJudgement_t *smj;
+  char countryName[ MAX_COUNTRY_LENGTH ];
 
   ent = &g_entities[ clientNum ];
 
@@ -1608,8 +1609,12 @@ const char *ClientConnect( int clientNum, qboolean firstTime )
   // don't do the "xxx connected" messages if they were caried over from previous level
   if( client->sess.invisible != qtrue )
   {
-    if( firstTime )
-      trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " connected\n\"", client->pers.netname ) );
+    if( firstTime ) {
+        if( trap_GeoIP_GetCountryName( client->pers.ip, countryName ) )
+            trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " connected from %s\n\"", client->pers.netname, countryName ) );
+        else
+            trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " connected\n\"", client->pers.netname ) );
+    }
 
     // count current clients and rank for scoreboard
     CalculateRanks( );

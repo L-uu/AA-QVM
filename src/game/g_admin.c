@@ -1591,6 +1591,7 @@ void G_admin_namelog_update( gclient_t *client, qboolean disconnect )
   char n1[ MAX_NAME_LENGTH ];
   char n2[ MAX_NAME_LENGTH ];
   int clientNum = ( client - level.clients );
+  char countryName[ MAX_COUNTRY_LENGTH ];
 
   if ( client->sess.invisible == qfalse )
   {
@@ -1718,6 +1719,10 @@ void G_admin_namelog_update( gclient_t *client, qboolean disconnect )
   Q_strncpyz( namelog->guid, client->pers.guid, sizeof( namelog->guid ) );
   Q_strncpyz( namelog->name[ 0 ], client->pers.netname,
     sizeof( namelog->name[ 0 ] ) );
+  if( trap_GeoIP_GetCountryName( client->pers.ip, countryName ) )
+      Q_strncpyz( namelog->country, countryName, sizeof( countryName ) );
+  else
+      Q_strncpyz( namelog->country, "N/N", 4 );
   namelog->slot = ( disconnect ) ? -1 : clientNum;
   schachtmeisterProcess( namelog );
   g_admin_namelog[ i ] = namelog;

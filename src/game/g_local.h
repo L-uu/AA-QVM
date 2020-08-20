@@ -327,6 +327,7 @@ typedef struct
 } clientSession_t;
 
 #define MAX_NETNAME       36
+#define MAX_COUNTRY_LENGTH 50
 
 // data to store details of clients that have abnormally disconnected
 typedef struct connectionRecord_s
@@ -1557,3 +1558,4 @@ qboolean  trap_GetEntityToken( char *buffer, int bufferSize );
 
 void      trap_SnapVector( float *v );
 void      trap_SendGameStat( const char *data );
+int       trap_GeoIP_GetCountryName( const char* ip_address, char* dest );
