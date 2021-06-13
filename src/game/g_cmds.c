@@ -1733,6 +1733,8 @@ void Cmd_CallVote_f( gentity_t *ent )
  
   if( !Q_stricmp( arg1, "kick" ) )
   {
+    char n1[ MAX_NAME_LENGTH ];
+
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
       trap_SendServerCommand( ent-g_entities,
@@ -1747,9 +1749,13 @@ void Cmd_CallVote_f( gentity_t *ent )
       "!ban %s \"%s\" vote kick", level.clients[ clientNum ].pers.ip,
       g_adminTempBan.string );
     if ( reason[0]!='\0' )
-      Q_strcat( level.voteString, sizeof( level.voteDisplayString ), va( "(%s^7)", reason ) );
+      Q_strcat( level.voteString, sizeof( level.voteString ), va( ": \"%s^7\"", reason ) );
+    G_SanitiseString( ent->client->pers.netname, n1, sizeof( n1 ) );
+    Q_strcat( level.voteString, sizeof( level.voteString ), va( ", \"%s\"", n1 ) );
     Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ),
       "Kick player \'%s\'", name );
+
+    level.votePassThreshold = g_kickVotesPercent.integer;
   }
   else if( !Q_stricmp( arg1, "spec" ) )
   {
@@ -2375,6 +2381,8 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
 
   if( !Q_stricmp( arg1, "kick" ) )
   {
+    char n1[ MAX_NAME_LENGTH ];
+
     if( G_admin_permission( &g_entities[ clientNum ], ADMF_IMMUNITY ) )
     {
       trap_SendServerCommand( ent-g_entities,
@@ -2390,9 +2398,17 @@ void Cmd_CallTeamVote_f( gentity_t *ent )
       sizeof( level.teamVoteString[ cs_offset ] ),
       "!ban %s \"%s\" team vote kick", level.clients[ clientNum ].pers.ip,
       g_adminTempBan.string );
+    if( reason[0] )
+      Q_strcat( level.teamVoteString[ cs_offset ], sizeof( level.teamVoteString[ cs_offset ] ),
+        va( ": \"%s\"", reason ) );
+    G_SanitiseString( ent->client->pers.netname, n1, sizeof( n1 ) );
+    Q_strcat( level.teamVoteString[ cs_offset ], sizeof( level.teamVoteString[ cs_offset ] ),
+      va( ", \"%s\"", n1 ) );
     Com_sprintf( level.teamVoteDisplayString[ cs_offset ],
         sizeof( level.teamVoteDisplayString[ cs_offset ] ),
         "Kick player '%s'", name );
+
+    level.votePassThreshold = g_kickVotesPercent.integer;
   }
   else if( !Q_stricmp( arg1, "denybuild" ) )
   {
