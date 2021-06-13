@@ -240,6 +240,7 @@ vmCvar_t  g_scrimMode;
 vmCvar_t  g_gradualFreeFunds;
 vmCvar_t  g_bleedingSpree;
 vmCvar_t  g_practise;
+vmCvar_t  g_specNoclip;
 
 static cvarTable_t   gameCvarTable[ ] =
 {
@@ -457,7 +458,8 @@ static cvarTable_t   gameCvarTable[ ] =
   { &g_scrimMode, "g_scrimMode", "0", CVAR_ARCHIVE, 0, qfalse },
   { &g_gradualFreeFunds, "g_gradualFreeFunds", "2", CVAR_ARCHIVE, 0, qtrue  },
   { &g_bleedingSpree, "g_bleedingSpree", "0", CVAR_ARCHIVE, 0, qfalse  },
-  { &g_practise, "g_practise", "0", CVAR_ARCHIVE, 0, qfalse }
+  { &g_practise, "g_practise", "0", CVAR_ARCHIVE, 0, qfalse },
+  { &g_specNoclip, "g_specNoclip", "0", CVAR_ARCHIVE, 0, qfalse },
 };
 
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[ 0 ] );

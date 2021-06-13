@@ -1496,6 +1496,7 @@ extern  vmCvar_t  g_scrimMode;
 extern  vmCvar_t  g_gradualFreeFunds;
 extern  vmCvar_t  g_bleedingSpree;
 extern  vmCvar_t  g_practise;
+extern  vmCvar_t  g_specNoclip;
 
 void      trap_Printf( const char *fmt );
 void      trap_Error( const char *fmt );
