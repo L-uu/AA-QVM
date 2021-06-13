@@ -2001,8 +2001,8 @@ void SpectatorClientEndFrame( gentity_t *ent )
  
     if( cl -> sess.spectatorState != SPECTATOR_FOLLOW ) 
     {
-          flags = ( cl->ps.eFlags & ~( EF_VOTED | EF_TEAMVOTED ) ) |
-            ( ent->client->ps.eFlags & ( EF_VOTED | EF_TEAMVOTED ) );
+          flags = ( cl->ps.eFlags & ~( 0x00010000 | 0x00020000 ) ) |
+            ( ent->client->ps.eFlags & ( 0x00010000 | 0x00020000 ) );
           score = ent->client->ps.persistant[ PERS_SCORE ];
           ping = ent->client->ps.ping;
           ent->client->ps = cl->ps;
