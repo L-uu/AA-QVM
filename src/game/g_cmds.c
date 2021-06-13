@@ -5549,9 +5549,6 @@ void G_PrivateMessage( gentity_t *ent )
     ADMP( va( "^%cPrivate message: ^7%s\n", color, msg ) );
     ADMP( va( "^%csent to Console.\n", color ) );
 
-    G_LogPrintf( "privmsg: %s^7: Console: ^6%s^7\n",
-      ( ent ) ? ent->client->pers.netname : "Console", msg );
-
     return;
   }
 
@@ -5591,11 +5588,6 @@ void G_PrivateMessage( gentity_t *ent )
       ADMP( va( "^%cPrivate message: ^7%s\n", color, msg ) );
 
     ADMP( va( "%s\n", str ) );
-
-    G_LogPrintf( "%s: %s^7: %s^7: %s\n",
-      ( teamonly ) ? "tprivmsg" : "privmsg",
-      ( ent ) ? ent->client->pers.netname : "console",
-      name, msg );
   }
 
   if( ignored )
