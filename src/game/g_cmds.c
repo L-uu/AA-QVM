@@ -1514,16 +1514,17 @@ void Cmd_Where_f( gentity_t *ent )
   trap_SendServerCommand( ent-g_entities, va( "print \"%s\n\"", vtos( ent->s.origin ) ) );
 }
 
-
-static qboolean map_is_votable( const char *map )
+/*
+==================
+Cmd_isMapBlacklisted
+==================
+*/
+static qboolean Cmd_isMapBlacklisted( const char *map )
 {
   char maps[ MAX_CVAR_VALUE_STRING ];
   char *token, *token_p;
 
-  if( !g_votableMaps.string[ 0 ] )
-    return qtrue;
-
-  Q_strncpyz( maps, g_votableMaps.string, sizeof( maps ) );
+  Q_strncpyz( maps, g_blacklistedMaps.string, sizeof( maps ) );
   token_p = maps;
   while( *( token = COM_Parse( &token_p ) ) )
   {
@@ -1862,7 +1863,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       return;
     }
 
-    if( !G_admin_permission( ent, ADMF_NO_VOTE_LIMIT ) && !map_is_votable( arg2 ) )
+    if( !G_admin_permission( ent, ADMF_NO_VOTE_LIMIT ) && Cmd_isMapBlacklisted( arg2 ) )
     {
       trap_SendServerCommand( ent - g_entities, va( "print \"callvote: "
         "Only admins may call a vote for map: %s\n\"", arg2 ) );
@@ -1897,7 +1898,7 @@ void Cmd_CallVote_f( gentity_t *ent )
       return;
     }
 
-    if( !G_admin_permission( ent, ADMF_NO_VOTE_LIMIT ) && !map_is_votable( arg2 ) )
+    if( !G_admin_permission( ent, ADMF_NO_VOTE_LIMIT ) && Cmd_isMapBlacklisted( arg2 ) )
     {
       trap_SendServerCommand( ent - g_entities, va( "print \"callvote: "
         "Only admins may call a vote for map: %s\n\"", arg2 ) );
