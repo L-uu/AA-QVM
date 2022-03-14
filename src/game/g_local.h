@@ -456,7 +456,7 @@ typedef struct
   int                 godMode;
 } clientPersistant_t;
 
-#define MAX_UNLAGGED_MARKERS 10
+#define MAX_UNLAGGED_MARKERS 256
 typedef struct unlagged_s {
   vec3_t      origin;
   vec3_t      mins;
