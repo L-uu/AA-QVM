@@ -363,6 +363,8 @@ typedef struct
   int timeLastViewed;
   int AllstatstimeLastViewed;
   int spreebleeds;
+  int killspree;
+  int killspreestage;
 } statsCounters_t;
 
 typedef struct

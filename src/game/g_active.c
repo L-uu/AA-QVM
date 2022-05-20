@@ -964,6 +964,19 @@ void ClientTimerActions( gentity_t *ent, int msec )
         }
       }
     }
+
+    //killspree must decay
+    if( ent->client->pers.statscounters.killspree > 0 )
+    { 
+      ent->client->pers.statscounters.killspree--;
+      if ( ent->client->pers.statscounters.killspreestage > 0 )
+      {
+        trap_SendServerCommand( -1,
+          va( "print \"%s^7's killing spree has ended!\n\"",
+            ent->client->pers.netname ) );
+        ent->client->pers.statscounters.killspreestage = 0;
+      }
+    }
   }
 
   while( client->time10000 >= 10000 )

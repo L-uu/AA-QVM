@@ -286,6 +286,20 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
       {
          level.humanStatsCounters.kills++;
       }
+
+      //this counts towards our killspree
+      attacker->client->pers.statscounters.killspree++;
+
+      //only print the killspree when we want
+      //not using a boolean because i want to add more killspree stages in the future
+      if( attacker->client->pers.statscounters.killspree == 5
+        && attacker->client->pers.statscounters.killspreestage == 0 )
+      {
+        trap_SendServerCommand( -1,
+          va( "print \"%s^7 is on a killing spree!\n\"",
+            attacker->client->pers.netname ) );
+        attacker->client->pers.statscounters.killspreestage++;
+      }
      }
     
     if( attacker == self )
